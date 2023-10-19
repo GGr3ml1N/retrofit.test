@@ -7,13 +7,24 @@ import androidx.lifecycle.viewModelScope
 import com.ggr3ml1n.retrofittest.retrofit.api.ProductApi
 import com.ggr3ml1n.retrofittest.retrofit.models.Product
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
+
+    private val interceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(interceptor)
+        .build()
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://dummyjson.com")
+        .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
