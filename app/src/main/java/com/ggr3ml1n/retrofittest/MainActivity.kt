@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             binding.apply {
                 vm.getUser(
-                    username = userName.toString(),
-                    password = password.toString()
+                    username = userName.text.toString(),
+                    password = password.text.toString()
                 )
             }
         }
